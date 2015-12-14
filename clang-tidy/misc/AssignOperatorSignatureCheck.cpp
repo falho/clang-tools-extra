@@ -90,9 +90,8 @@ void AssignOperatorSignatureCheck::check(
 
   const auto* Retstmt = Result.Nodes.getNodeAs<ReturnStmt>("ReturnThis");
   if (Retstmt) {
-    const auto Location = Retstmt->child_begin()->getLocStart();
+    const auto Location = Retstmt->getRetValue()->getLocStart();
     diag(Location, "operator= should return *this");
-
   }
 }
 
