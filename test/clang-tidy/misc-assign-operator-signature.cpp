@@ -54,3 +54,20 @@ struct Virtual {
   virtual Virtual& operator=(const Virtual &);
   // CHECK-MESSAGES: :[[@LINE-1]]:3: warning: operator=() should not be marked 'virtual'
 };
+
+struct NoReturn {
+    int member;
+
+    NoReturn &operator=(const NoReturn &rhs) {
+        // CHECK-MESSAGES: :[[@LINE-1]]:5: warning: operator= should return *this
+        this->member = rhs.member;
+    }
+};
+
+struct ReturnOtherThanThis {
+    ReturnOtherThanThis& operator=(const ReturnOtherThanThis& rhs) {
+        return const_cast<ReturnOtherThanThis&>(rhs);
+        // CHECK-MESSAGES: :[[@LINE-1]]:16: warning: operator= should return *this
+    }
+};
+
