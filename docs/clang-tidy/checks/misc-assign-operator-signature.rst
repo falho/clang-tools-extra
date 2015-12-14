@@ -8,3 +8,5 @@ types.
   * The return type must be ``Class&``.
   * Works with move-assign and assign by value.
   * Private and deleted operators are ignored.
+  * There must be return statement.
+  * Return statement must be ``return *this``
