@@ -46,6 +46,7 @@ List of clang-tidy Checks
    misc-new-delete-overloads
    misc-noexcept-move-constructor
    misc-non-copyable-objects
+   misc-non-effective-expr
    misc-sizeof-container
    misc-static-assert
    misc-swapped-arguments
