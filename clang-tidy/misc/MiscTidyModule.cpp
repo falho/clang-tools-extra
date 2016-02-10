@@ -23,7 +23,6 @@
 #include "NewDeleteOverloadsCheck.h"
 #include "NoexceptMoveConstructorCheck.h"
 #include "NonCopyableObjects.h"
-#include "NonEffectiveExprCheck.h"
 #include "SizeofContainerCheck.h"
 #include "StaticAssertCheck.h"
 #include "SwappedArgumentsCheck.h"
@@ -66,8 +65,6 @@ public:
         "misc-noexcept-move-constructor");
     CheckFactories.registerCheck<NonCopyableObjectsCheck>(
         "misc-non-copyable-objects");
-    CheckFactories.registerCheck<NonEffectiveExprCheck>(
-        "misc-non-effective-expr");
     CheckFactories.registerCheck<SizeofContainerCheck>("misc-sizeof-container");
     CheckFactories.registerCheck<StaticAssertCheck>(
         "misc-static-assert");
