@@ -59,7 +59,7 @@ struct NoReturn {
     int member;
 
     NoReturn &operator=(const NoReturn &rhs) {
-        // CHECK-MESSAGES: :[[@LINE-1]]:5: warning: operator= should return *this
+        // CHECK-MESSAGES: :[[@LINE-1]]:5: warning: operator=() should return *this
         this->member = rhs.member;
     }
 };
@@ -67,7 +67,7 @@ struct NoReturn {
 struct ReturnOtherThanThis {
     ReturnOtherThanThis& operator=(const ReturnOtherThanThis& rhs) {
         return const_cast<ReturnOtherThanThis&>(rhs);
-        // CHECK-MESSAGES: :[[@LINE-1]]:16: warning: operator= should return *this
+        // CHECK-MESSAGES: :[[@LINE-1]]:16: warning: operator=() should return *this
     }
 };
 
