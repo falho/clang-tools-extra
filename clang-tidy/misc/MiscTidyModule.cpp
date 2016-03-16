@@ -14,6 +14,7 @@
 #include "AssertSideEffectCheck.h"
 #include "AssignOperatorSignatureCheck.h"
 #include "BoolPointerImplicitConversionCheck.h"
+#include "ComparisonMisuseCheck.h"
 #include "DefinitionsInHeadersCheck.h"
 #include "InaccurateEraseCheck.h"
 #include "IncorrectRoundings.h"
@@ -38,6 +39,8 @@
 #include "UnusedParametersCheck.h"
 #include "UnusedRAIICheck.h"
 #include "VirtualNearMissCheck.h"
+#include "VirtualShadowing2Check.h"
+#include "VirtualShadowingCheck.h"
 
 namespace clang {
 namespace tidy {
@@ -53,6 +56,8 @@ public:
         "misc-assign-operator-signature");
     CheckFactories.registerCheck<BoolPointerImplicitConversionCheck>(
         "misc-bool-pointer-implicit-conversion");
+    CheckFactories.registerCheck<ComparisonMisuseCheck>(
+        "misc-comparison-misuse");
     CheckFactories.registerCheck<DefinitionsInHeadersCheck>(
         "misc-definitions-in-headers");
     CheckFactories.registerCheck<InaccurateEraseCheck>(
@@ -99,6 +104,10 @@ public:
     CheckFactories.registerCheck<UnusedRAIICheck>("misc-unused-raii");
     CheckFactories.registerCheck<VirtualNearMissCheck>(
         "misc-virtual-near-miss");
+    CheckFactories.registerCheck<VirtualShadowing2Check>(
+        "misc-virtual-shadowing2");
+    CheckFactories.registerCheck<VirtualShadowingCheck>(
+        "misc-virtual-shadowing");
   }
 };
 

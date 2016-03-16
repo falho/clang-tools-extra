@@ -50,6 +50,7 @@ Clang-Tidy Checks
    misc-assert-side-effect
    misc-assign-operator-signature
    misc-bool-pointer-implicit-conversion
+   misc-comparison-misuse
    misc-definitions-in-headers
    misc-inaccurate-erase
    misc-incorrect-roundings
@@ -73,6 +74,8 @@ Clang-Tidy Checks
    misc-unused-parameters
    misc-unused-raii
    misc-virtual-near-miss
+   misc-virtual-shadowing
+   misc-virtual-shadowing2
    modernize-loop-convert
    modernize-make-unique
    modernize-pass-by-value
