@@ -74,8 +74,6 @@ Clang-Tidy Checks
    misc-unused-parameters
    misc-unused-raii
    misc-virtual-near-miss
-   misc-virtual-shadowing
-   misc-virtual-shadowing2
    modernize-loop-convert
    modernize-make-unique
    modernize-pass-by-value

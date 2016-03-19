@@ -18,18 +18,40 @@ namespace tidy {
 namespace misc {
 
 void ComparisonMisuseCheck::registerMatchers(MatchFinder *Finder) {
-  // FIXME: Add matchers.
-  Finder->addMatcher(functionDecl().bind("x"), this);
+
+  Finder->addMatcher(binaryOperator(
+                               hasEitherOperand(ignoringImpCasts(stringLiteral())), 
+                               hasEitherOperand(ignoringImpCasts(declRefExpr(hasType(asString("const char *"))))))
+                             .bind("charToLiteral"),this);
+                          
+  Finder->addMatcher(binaryOperator(hasEitherOperand(ignoringImpCasts(callExpr(callee(functionDecl(anyOf(
+                                                                                                    hasName("strcmp"), 
+                                                                                                    hasName("strncmp"), 
+                                                                                                    hasName("memcmp"))))))), 
+                                    hasEitherOperand(ignoringImpCasts(integerLiteral(unless(equals(0))))))
+                             .bind("funcToLiteral"),this);
+
+  Finder->addMatcher(binaryOperator(unless(anyOf(hasOperatorName("=="), 
+                                                 hasOperatorName("!="))), 
+                                           hasEitherOperand(ignoringImpCasts(gnuNullExpr())))
+                             .bind("compareToNull"),this);
 }
 
 void ComparisonMisuseCheck::check(const MatchFinder::MatchResult &Result) {
-  // FIXME: Add callback implementation.
-  const auto *MatchedDecl = Result.Nodes.getNodeAs<FunctionDecl>("x");
-  if (MatchedDecl->getName().startswith("awesome_"))
-    return;
-  diag(MatchedDecl->getLocation(), "function '%0' is insufficiently awesome")
-      << MatchedDecl->getName()
-      << FixItHint::CreateInsertion(MatchedDecl->getLocation(), "awesome_");
+  const auto *CharToLiteral = Result.Nodes.getNodeAs<BinaryOperator>("charToLiteral");
+  if(CharToLiteral != NULL) {
+    diag(CharToLiteral->getOperatorLoc(), "char* is compared to a string literal");
+  }
+
+  const auto *FunctionToLiteral = Result.Nodes.getNodeAs<BinaryOperator>("funcToLiteral");
+  if(FunctionToLiteral != NULL) {
+    diag(FunctionToLiteral->getOperatorLoc(), "function is compared to literal different than 0");
+  }
+
+  const auto *CompareToNull = Result.Nodes.getNodeAs<BinaryOperator>("compareToNull");
+  if(CompareToNull != NULL) {
+    diag(CompareToNull->getOperatorLoc(), "comparison to NULL");
+  }
 }
 
 } // namespace misc

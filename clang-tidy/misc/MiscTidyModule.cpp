@@ -39,8 +39,6 @@
 #include "UnusedParametersCheck.h"
 #include "UnusedRAIICheck.h"
 #include "VirtualNearMissCheck.h"
-#include "VirtualShadowing2Check.h"
-#include "VirtualShadowingCheck.h"
 
 namespace clang {
 namespace tidy {
@@ -104,10 +102,6 @@ public:
     CheckFactories.registerCheck<UnusedRAIICheck>("misc-unused-raii");
     CheckFactories.registerCheck<VirtualNearMissCheck>(
         "misc-virtual-near-miss");
-    CheckFactories.registerCheck<VirtualShadowing2Check>(
-        "misc-virtual-shadowing2");
-    CheckFactories.registerCheck<VirtualShadowingCheck>(
-        "misc-virtual-shadowing");
   }
 };
 

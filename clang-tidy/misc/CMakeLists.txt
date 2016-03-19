@@ -31,8 +31,6 @@ add_clang_library(clangTidyMiscModule
   UnusedRAIICheck.cpp
   UniqueptrResetReleaseCheck.cpp
   VirtualNearMissCheck.cpp
-  VirtualShadowing2Check.cpp
-  VirtualShadowingCheck.cpp
 
   LINK_LIBS
   clangAST
