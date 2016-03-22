@@ -16,7 +16,11 @@ namespace clang {
 namespace tidy {
 namespace misc {
 
-/// FIXME: Write a short description.
+/// This checker reports errors related to the misuse of the comparison operator.
+/// It should warn for the following cases:
+///   - strcmp,strncmp,memcmp misuse.
+///   - char* is compared to a string literal
+///   - inequality operator usage for NULL
 ///
 /// For the user-facing documentation see:
 /// http://clang.llvm.org/extra/clang-tidy/checks/misc-comparison-misuse.html

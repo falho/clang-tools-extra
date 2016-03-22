@@ -45,23 +45,20 @@ void ComparisonMisuseCheck::registerMatchers(MatchFinder *Finder) {
 void ComparisonMisuseCheck::check(const MatchFinder::MatchResult &Result) {
   const auto *CharToLiteral =
       Result.Nodes.getNodeAs<BinaryOperator>("charToLiteral");
-  if (CharToLiteral != NULL) {
+  if (CharToLiteral != nullptr)
     diag(CharToLiteral->getOperatorLoc(),
          "char* is compared to a string literal");
-  }
 
   const auto *FunctionToLiteral =
       Result.Nodes.getNodeAs<BinaryOperator>("funcToLiteral");
-  if (FunctionToLiteral != NULL) {
+  if (FunctionToLiteral != nullptr)
     diag(FunctionToLiteral->getOperatorLoc(),
          "function is compared to literal different than 0");
-  }
 
   const auto *CompareToNull =
       Result.Nodes.getNodeAs<BinaryOperator>("compareToNull");
-  if (CompareToNull != NULL) {
-    diag(CompareToNull->getOperatorLoc(), "comparison to NULL");
-  }
+  if (CompareToNull != nullptr)
+    diag(CompareToNull->getOperatorLoc(), "comparison to nullptr");
 }
 
 } // namespace misc
