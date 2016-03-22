@@ -19,37 +19,47 @@ namespace misc {
 
 void ComparisonMisuseCheck::registerMatchers(MatchFinder *Finder) {
 
-  Finder->addMatcher(binaryOperator(
-                               hasEitherOperand(ignoringImpCasts(stringLiteral())), 
-                               hasEitherOperand(ignoringImpCasts(declRefExpr(hasType(asString("const char *"))))))
-                             .bind("charToLiteral"),this);
-                          
-  Finder->addMatcher(binaryOperator(hasEitherOperand(ignoringImpCasts(callExpr(callee(functionDecl(anyOf(
-                                                                                                    hasName("strcmp"), 
-                                                                                                    hasName("strncmp"), 
-                                                                                                    hasName("memcmp"))))))), 
-                                    hasEitherOperand(ignoringImpCasts(integerLiteral(unless(equals(0))))))
-                             .bind("funcToLiteral"),this);
+  Finder->addMatcher(
+      binaryOperator(hasEitherOperand(ignoringImpCasts(stringLiteral())),
+                     hasEitherOperand(ignoringImpCasts(
+                         declRefExpr(hasType(asString("const char *"))))))
+          .bind("charToLiteral"),
+      this);
 
-  Finder->addMatcher(binaryOperator(unless(anyOf(hasOperatorName("=="), 
-                                                 hasOperatorName("!="))), 
-                                           hasEitherOperand(ignoringImpCasts(gnuNullExpr())))
-                             .bind("compareToNull"),this);
+  Finder->addMatcher(
+      binaryOperator(
+          hasEitherOperand(ignoringImpCasts(callExpr(callee(functionDecl(anyOf(
+              hasName("strcmp"), hasName("strncmp"), hasName("memcmp"))))))),
+          hasEitherOperand(ignoringImpCasts(integerLiteral(unless(equals(0))))))
+          .bind("funcToLiteral"),
+      this);
+
+  Finder->addMatcher(
+      binaryOperator(
+          unless(anyOf(hasOperatorName("=="), hasOperatorName("!="))),
+          hasEitherOperand(ignoringImpCasts(gnuNullExpr())))
+          .bind("compareToNull"),
+      this);
 }
 
 void ComparisonMisuseCheck::check(const MatchFinder::MatchResult &Result) {
-  const auto *CharToLiteral = Result.Nodes.getNodeAs<BinaryOperator>("charToLiteral");
-  if(CharToLiteral != NULL) {
-    diag(CharToLiteral->getOperatorLoc(), "char* is compared to a string literal");
+  const auto *CharToLiteral =
+      Result.Nodes.getNodeAs<BinaryOperator>("charToLiteral");
+  if (CharToLiteral != NULL) {
+    diag(CharToLiteral->getOperatorLoc(),
+         "char* is compared to a string literal");
   }
 
-  const auto *FunctionToLiteral = Result.Nodes.getNodeAs<BinaryOperator>("funcToLiteral");
-  if(FunctionToLiteral != NULL) {
-    diag(FunctionToLiteral->getOperatorLoc(), "function is compared to literal different than 0");
+  const auto *FunctionToLiteral =
+      Result.Nodes.getNodeAs<BinaryOperator>("funcToLiteral");
+  if (FunctionToLiteral != NULL) {
+    diag(FunctionToLiteral->getOperatorLoc(),
+         "function is compared to literal different than 0");
   }
 
-  const auto *CompareToNull = Result.Nodes.getNodeAs<BinaryOperator>("compareToNull");
-  if(CompareToNull != NULL) {
+  const auto *CompareToNull =
+      Result.Nodes.getNodeAs<BinaryOperator>("compareToNull");
+  if (CompareToNull != NULL) {
     diag(CompareToNull->getOperatorLoc(), "comparison to NULL");
   }
 }
