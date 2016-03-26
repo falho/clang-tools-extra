@@ -14,6 +14,7 @@
 #include "AssertSideEffectCheck.h"
 #include "AssignOperatorSignatureCheck.h"
 #include "BoolPointerImplicitConversionCheck.h"
+#include "ComparisonFunctionAddressCheck.h"
 #include "ComparisonMisuseCheck.h"
 #include "DefinitionsInHeadersCheck.h"
 #include "InaccurateEraseCheck.h"
@@ -54,6 +55,8 @@ public:
         "misc-assign-operator-signature");
     CheckFactories.registerCheck<BoolPointerImplicitConversionCheck>(
         "misc-bool-pointer-implicit-conversion");
+    CheckFactories.registerCheck<ComparisonFunctionAddressCheck>(
+        "misc-Comparison-Function-Address");
     CheckFactories.registerCheck<ComparisonMisuseCheck>(
         "misc-comparison-misuse");
     CheckFactories.registerCheck<DefinitionsInHeadersCheck>(
