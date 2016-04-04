@@ -30,11 +30,19 @@ bool isMyString(const char *my){
 }
 
 char * testFunction(char * str1, char * str2) {
+      int i = 8;     
+
       if (strcmp(str1,str2)>0)//is correct
          return str1;
 
       if (strcmp(str1,str2)==1)//is incorrect
          return str2;
+
+      if (strncmp(str1,str2,2)==i)//is incorrect
+         return str2;
+
+      int h = strncmp(str1,str2,2);
+      if(h==0);
 }
 
 char * testFunction2(char * str1, char * str2) {

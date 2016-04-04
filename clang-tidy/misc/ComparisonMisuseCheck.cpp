@@ -21,16 +21,21 @@ void ComparisonMisuseCheck::registerMatchers(MatchFinder *Finder) {
 
   Finder->addMatcher(
       binaryOperator(hasEitherOperand(ignoringImpCasts(stringLiteral())),
-                     hasEitherOperand(ignoringImpCasts(
-                         declRefExpr(hasType(asString("const char *"))))))
+                     hasEitherOperand(hasType(pointsTo(isAnyCharacter()))))
           .bind("charToLiteral"),
       this);
 
   Finder->addMatcher(
-      binaryOperator(
-          hasEitherOperand(ignoringImpCasts(callExpr(callee(functionDecl(anyOf(
-              hasName("strcmp"), hasName("strncmp"), hasName("memcmp"))))))),
-          hasEitherOperand(ignoringImpCasts(integerLiteral(unless(equals(0))))))
+      stmt(anyOf(binaryOperator(
+                     hasLHS(ignoringImpCasts(callExpr(callee(functionDecl(
+                         anyOf(hasName("strcmp"), hasName("strncmp"),
+                               hasName("memcmp"))))))),
+                     hasRHS(unless(integerLiteral(equals(0))))),
+                 binaryOperator(
+                     hasRHS(ignoringImpCasts(callExpr(callee(functionDecl(
+                         anyOf(hasName("strcmp"), hasName("strncmp"),
+                               hasName("memcmp"))))))),
+                     hasLHS(unless(integerLiteral(equals(0)))))))
           .bind("funcToLiteral"),
       this);
 
