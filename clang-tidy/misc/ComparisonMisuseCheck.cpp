@@ -50,19 +50,19 @@ void ComparisonMisuseCheck::registerMatchers(MatchFinder *Finder) {
 void ComparisonMisuseCheck::check(const MatchFinder::MatchResult &Result) {
   const auto *CharToLiteral =
       Result.Nodes.getNodeAs<BinaryOperator>("charToLiteral");
-  if (CharToLiteral != nullptr)
+  if (CharToLiteral)
     diag(CharToLiteral->getOperatorLoc(),
          "char* is compared to a string literal");
 
   const auto *FunctionToLiteral =
       Result.Nodes.getNodeAs<BinaryOperator>("funcToLiteral");
-  if (FunctionToLiteral != nullptr)
+  if (FunctionToLiteral)
     diag(FunctionToLiteral->getOperatorLoc(),
-         "function is compared to literal different than 0");
+         "function should be compared only to 0");
 
   const auto *CompareToNull =
       Result.Nodes.getNodeAs<BinaryOperator>("compareToNull");
-  if (CompareToNull != nullptr)
+  if (CompareToNull)
     diag(CompareToNull->getOperatorLoc(), "comparison to nullptr");
 }
 
