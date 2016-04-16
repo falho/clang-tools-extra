@@ -56,7 +56,7 @@ public:
     CheckFactories.registerCheck<BoolPointerImplicitConversionCheck>(
         "misc-bool-pointer-implicit-conversion");
     CheckFactories.registerCheck<ComparisonFunctionAddressCheck>(
-        "misc-Comparison-Function-Address");
+        "misc-comparison-function-address");
     CheckFactories.registerCheck<ComparisonMisuseCheck>(
         "misc-comparison-misuse");
     CheckFactories.registerCheck<DefinitionsInHeadersCheck>(

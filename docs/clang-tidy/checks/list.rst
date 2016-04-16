@@ -46,7 +46,7 @@ Clang-Tidy Checks
    llvm-include-order
    llvm-namespace-comment
    llvm-twine-local
-   misc-Comparison-Function-Address
+   misc-comparison-function-address
    misc-argument-comment
    misc-assert-side-effect
    misc-assign-operator-signature

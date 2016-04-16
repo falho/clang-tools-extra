@@ -1,6 +1,6 @@
 #include <cstdio>
 
-// RUN: %check_clang_tidy %s misc-Comparison-Function-Address %t
+// RUN: %check_clang_tidy %s misc-comparison-function-address %t
 
 // FIXME: Add something that triggers the check here.
 void f() {
@@ -12,7 +12,7 @@ void f() {
   if (getc == nullptr)
     ;
 }
-// CHECK-MESSAGES: :[[@LINE-1]]:6: warning: function 'f' is insufficiently awesome [misc-Comparison-Function-Address]
+// CHECK-MESSAGES: :[[@LINE-1]]:6: warning: function 'f' is insufficiently awesome [misc-comparison-function-address]
 
 // FIXME: Verify the applied fix.
 //   * Make the CHECK patterns specific enough and try to make verified lines

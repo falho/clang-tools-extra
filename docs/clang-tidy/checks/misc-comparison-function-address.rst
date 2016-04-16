@@ -1,6 +1,6 @@
-.. title:: clang-tidy - misc-Comparison-Function-Address
+.. title:: clang-tidy - misc-comparison-function-address
 
-misc-Comparison-Function-Address
+misc-comparison-function-address
 ================================
 
 This Checker gives a warning if address of a function is compared.

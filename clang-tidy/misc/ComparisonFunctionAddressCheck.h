@@ -24,7 +24,7 @@ namespace misc {
 /// functions can be compared only against function pointers
 ///
 /// For the user-facing documentation see:
-/// http://clang.llvm.org/extra/clang-tidy/checks/misc-Comparison-Function-Address.html
+/// http://clang.llvm.org/extra/clang-tidy/checks/misc-comparison-function-address.html
 class ComparisonFunctionAddressCheck : public ClangTidyCheck {
 public:
   ComparisonFunctionAddressCheck(StringRef Name, ClangTidyContext *Context)
