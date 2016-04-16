@@ -1,7 +1,10 @@
 // RUN: %check_clang_tidy %s misc-comparison-misuse %t
 
 #define NULL __null
-#include <cstring>
+
+int strcmp(char *, char *);
+int strncmp ( const char * str1, const char * str2, int num );
+int memcmp ( const void * ptr1, const void * ptr2, int num );
 
 bool test_pointer_to_literal(const char *my){
   bool b = (my=="mystring");
