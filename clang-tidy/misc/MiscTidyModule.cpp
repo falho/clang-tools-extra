@@ -15,7 +15,6 @@
 #include "AssignOperatorSignatureCheck.h"
 #include "BoolPointerImplicitConversionCheck.h"
 #include "ComparisonFunctionAddressCheck.h"
-#include "ComparisonMisuseCheck.h"
 #include "DefinitionsInHeadersCheck.h"
 #include "InaccurateEraseCheck.h"
 #include "IncorrectRoundings.h"
@@ -57,8 +56,6 @@ public:
         "misc-bool-pointer-implicit-conversion");
     CheckFactories.registerCheck<ComparisonFunctionAddressCheck>(
         "misc-comparison-function-address");
-    CheckFactories.registerCheck<ComparisonMisuseCheck>(
-        "misc-comparison-misuse");
     CheckFactories.registerCheck<DefinitionsInHeadersCheck>(
         "misc-definitions-in-headers");
     CheckFactories.registerCheck<InaccurateEraseCheck>(

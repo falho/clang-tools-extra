@@ -1,41 +1,51 @@
-#include <cstdio>
-
 // RUN: %check_clang_tidy %s misc-comparison-function-address %t
 
-// FIXME: Add something that triggers the check here.
-void f() {
-  int var = 2;
-  if (getc == 0)
-    ; //error. Address of getc is compared
-  if (var == getc)
-    ;
-  if (getc == nullptr)
-    ;
+#define nullptr 0
+#define NULL    0
+
+struct __sFile {
+  int unused;
+};
+  
+typedef struct __sFILE FILE;
+
+int getc(FILE * stream);
+char func();
+char * func2();
+
+
+void test_function_warning() {
+  if (getc == 0); 
+  // CHECK-MESSAGES: :[[@LINE-1]]:12: warning: Address of function is compared [misc-comparison-function-address]
+  
+  if (0 == getc);
+  // CHECK-MESSAGES: :[[@LINE-1]]:9: warning: Address of function is compared [misc-comparison-function-address]  
+ 
+  if (getc == nullptr);
+  // CHECK-MESSAGES: :[[@LINE-1]]:12: warning: Address of function is compared [misc-comparison-function-address]
+
+  if (NULL == func);
+  // CHECK-MESSAGES: :[[@LINE-1]]:12: warning: Address of function is compared [misc-comparison-function-address]
 }
-// CHECK-MESSAGES: :[[@LINE-1]]:6: warning: function 'f' is insufficiently awesome [misc-comparison-function-address]
 
-// FIXME: Verify the applied fix.
-//   * Make the CHECK patterns specific enough and try to make verified lines
-//     unique to avoid incorrect matches.
-//   * Use {{}} for regular expressions.
-// CHECK-FIXES: {{^}}void awesome_f();{{$}}
 
-// FIXME: Add something that doesn't trigger the check here.
-void awesome_f2() {
-  int (*myfp)(char const *) = 0;
-  if (getc == myfp)
-    ; //should be ok
-  if (0 == myfp)
-    ;
-  if (getc("myString") == 0)
-    ;
-  if (myfp == getc)
-    ;
-  if (0 == getc)
-    ;
-  if (myfp == 0)
-    ;
-  if (myfp == NULL)
-    ;
+void test_function_awsome() {
+  FILE * pFile;
+  int (*myfp)(FILE *) = 0;
+  char (*myfp2)();
+  
+  if (getc == myfp);
+
+  if (0 == myfp);
+
+  if (getc(pFile) == 0);
+
+  if (myfp == getc);
+
+  if (myfp == 0);
+
+  if (myfp == NULL);
+
+  if (func == myfp2);
 }
 
