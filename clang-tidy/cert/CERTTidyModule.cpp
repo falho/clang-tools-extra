@@ -18,6 +18,7 @@
 #include "../misc/ThrowByValueCatchByReferenceCheck.h"
 #include "CommandProcessorCheck.h"
 #include "FloatLoopCounter.h"
+#include "LimitedRandomnessCheck.h"
 #include "SetLongJmpCheck.h"
 #include "StaticObjectExceptionCheck.h"
 #include "ThrownExceptionTypeCheck.h"
@@ -32,6 +33,8 @@ public:
   void addCheckFactories(ClangTidyCheckFactories &CheckFactories) override {
     // C++ checkers
     // DCL
+    CheckFactories.registerCheck<LimitedRandomnessCheck>(
+        "cert-limited-randomness");
     CheckFactories.registerCheck<VariadicFunctionDefCheck>(
         "cert-dcl50-cpp");
     CheckFactories.registerCheck<misc::NewDeleteOverloadsCheck>(
