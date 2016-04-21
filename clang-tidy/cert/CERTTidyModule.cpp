@@ -17,6 +17,7 @@
 #include "../misc/StaticAssertCheck.h"
 #include "../misc/ThrowByValueCatchByReferenceCheck.h"
 #include "CommandProcessorCheck.h"
+#include "DontModifyStdNamespaceCheck.h"
 #include "FloatLoopCounter.h"
 #include "SetLongJmpCheck.h"
 #include "StaticObjectExceptionCheck.h"
@@ -32,6 +33,8 @@ public:
   void addCheckFactories(ClangTidyCheckFactories &CheckFactories) override {
     // C++ checkers
     // DCL
+    CheckFactories.registerCheck<DontModifyStdNamespaceCheck>(
+        "cert-msc53-cpp");
     CheckFactories.registerCheck<VariadicFunctionDefCheck>(
         "cert-dcl50-cpp");
     CheckFactories.registerCheck<misc::NewDeleteOverloadsCheck>(
