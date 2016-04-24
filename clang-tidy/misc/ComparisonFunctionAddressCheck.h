@@ -17,12 +17,10 @@ namespace tidy {
 namespace misc {
 
 /// This Checker gives a warning if address of a function is compared.
-/// For example: the programmer wants to write getc()==0 but writes getc==0
-///
-/// as a general rule, function pointers can be compared to other function
-/// pointers, function, 0, nullptr
-/// functions can be compared only against function pointers
-///
+/// For example: the programmer wants to write getc()==0 but writes getc==0.
+/// As a general rule, function pointers can be compared to other function
+/// pointers, function, 0, nullptr, functions can be compared only against
+/// function pointers
 /// For the user-facing documentation see:
 /// http://clang.llvm.org/extra/clang-tidy/checks/misc-comparison-function-address.html
 class ComparisonFunctionAddressCheck : public ClangTidyCheck {
@@ -38,4 +36,3 @@ public:
 } // namespace clang
 
 #endif // LLVM_CLANG_TOOLS_EXTRA_CLANG_TIDY_MISC_COMPARISON_FUNCTION_ADDRESS_H
-
