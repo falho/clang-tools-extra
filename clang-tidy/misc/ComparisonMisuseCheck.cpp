@@ -26,16 +26,12 @@ void ComparisonMisuseCheck::registerMatchers(MatchFinder *Finder) {
       this);
 
   Finder->addMatcher(
-      stmt(anyOf(binaryOperator(
-                     hasLHS(ignoringImpCasts(callExpr(callee(functionDecl(
-                         anyOf(hasName("strcmp"), hasName("strncmp"),
-                               hasName("memcmp"))))))),
-                     hasRHS(unless(integerLiteral(equals(0))))),
-                 binaryOperator(
-                     hasRHS(ignoringImpCasts(callExpr(callee(functionDecl(
-                         anyOf(hasName("strcmp"), hasName("strncmp"),
-                               hasName("memcmp"))))))),
-                     hasLHS(unless(integerLiteral(equals(0)))))))
+      stmt(binaryOperator(
+               hasEitherOperand(ignoringImpCasts(callExpr(callee(
+                   functionDecl(anyOf(hasName("strcmp"), hasName("strncmp"),
+                                      hasName("memcmp"))))))),
+               hasRHS(unless(integerLiteral(equals(0)))),
+               hasLHS(unless(integerLiteral(equals(0))))))
           .bind("funcToLiteral"),
       this);
 
@@ -69,3 +65,4 @@ void ComparisonMisuseCheck::check(const MatchFinder::MatchResult &Result) {
 } // namespace misc
 } // namespace tidy
 } // namespace clang
+
