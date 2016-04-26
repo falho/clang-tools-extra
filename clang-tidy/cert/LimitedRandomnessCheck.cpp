@@ -26,9 +26,11 @@ void LimitedRandomnessCheck::registerMatchers(MatchFinder *Finder) {
 void LimitedRandomnessCheck::check(const MatchFinder::MatchResult &Result) {
   const auto *MatchedDecl =
       Result.Nodes.getNodeAs<DeclRefExpr>("randomGenerator");
-  diag(MatchedDecl->getLocation(), "rand() function has limited randomness, use C++11 random library instead");
+  diag(MatchedDecl->getLocation(), "rand() function has limited randomness, "
+                                   "use C++11 random library instead");
 }
 
 } // namespace cert
 } // namespace tidy
 } // namespace clang
+
