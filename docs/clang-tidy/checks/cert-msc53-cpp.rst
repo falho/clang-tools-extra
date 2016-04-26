@@ -3,4 +3,4 @@
 cert-msc53-cpp
 ==============================
 
-FIXME: Describe what patterns does the check detect and why. Give examples.
+Modification of the std namespace can result to undefined behavior. This checker warns for such modifications.

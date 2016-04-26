@@ -1,14 +1,30 @@
 // RUN: %check_clang_tidy %s cert-msc53-cpp %t
 
-// FIXME: Add something that triggers the check here.
-void f();
-// CHECK-MESSAGES: :[[@LINE-1]]:6: warning: function 'f' is insufficiently awesome [cert-dont-modify-std-namespace]
+//#include <iostream>
 
-// FIXME: Verify the applied fix.
-//   * Make the CHECK patterns specific enough and try to make verified lines
-//     unique to avoid incorrect matches.
-//   * Use {{}} for regular expressions.
-// CHECK-FIXES: {{^}}void awesome_f();{{$}}
+namespace A {
+  namespace B {
+    int b;
+  }
+}
 
-// FIXME: Add something that doesn't trigger the check here.
-void awesome_f2();
+namespace A {
+  namespace B {
+    int c;
+  }
+}
+
+namespace std {
+// CHECK-MESSAGES: :[[@LINE-1]]:1: warning: modification of std namespace can result to undefined behavior [cert-msc53-cpp]  
+  int stdInt;
+}
+
+using namespace std;
+
+int main() {
+  A::B::b = 6;
+  A::B::c = 7;
+
+  return 0;
+}
+
