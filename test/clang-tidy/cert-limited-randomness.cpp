@@ -1,27 +1,34 @@
-// RUN: %check_clang_tidy %s cert-limited-randomness %t
+// RUN: %check_clang_tidy %s cert-msc50-cpp %t
+
+int rand();
 
 namespace std {
-int rand();
+using ::rand;
 typedef char * string;
 char * to_string(int);
 }
 
+//#include <cstdlib>
 
-int rand();
+namespace nonstd {
+  int rand();
+}
 
-void noncompilant() {
+// problem: matcher is also matching for this
+//int rand(int);
+
+void testFunction1() {
   int i = std::rand();
-  // CHECK-MESSAGES: :[[@LINE-1]]:16: warning: rand() function has limited randomness [cert-limited-randomness]
+  // CHECK-MESSAGES: :[[@LINE-1]]:16: warning: rand() function has limited randomnes, use C++11 random library instead [cert-msc50-cpp]
 
   int j = ::rand();
-  // CHECK-MESSAGES: :[[@LINE-1]]:13: warning: rand() function has limited randomness [cert-limited-randomness]
+  // CHECK-MESSAGES: :[[@LINE-1]]:13: warning: rand() function has limited randomness, use C++11 random library instead [cert-msc50-cpp]
 
-  int k = rand();
-  // CHECK-MESSAGES: :[[@LINE-1]]:11: warning: rand() function has limited randomness [cert-limited-randomness]
+  //int k = rand(i);
+  // CHECK-MESSAGES: :[[@LINE-1]]:11: warning: rand() function has limited randomness, use C++11 random library instead [cert-msc50-cpp]
+
+  int l = nonstd::rand();
+
+  int m = rand();
 }
 
-
-void f() {
-  std::to_string(std::rand() % 10000);
-  // CHECK-MESSAGES: :[[@LINE-1]]:23: warning: rand() function has limited randomness [cert-limited-randomness]
-}

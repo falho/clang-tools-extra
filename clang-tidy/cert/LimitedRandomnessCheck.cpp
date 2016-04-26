@@ -18,7 +18,7 @@ namespace tidy {
 namespace cert {
 
 void LimitedRandomnessCheck::registerMatchers(MatchFinder *Finder) {
-  Finder->addMatcher(declRefExpr(hasDeclaration(namedDecl(hasName("rand"))))
+  Finder->addMatcher(declRefExpr(hasDeclaration(namedDecl(hasName("::rand"))))
                          .bind("randomGenerator"),
                      this);
 }
@@ -26,7 +26,7 @@ void LimitedRandomnessCheck::registerMatchers(MatchFinder *Finder) {
 void LimitedRandomnessCheck::check(const MatchFinder::MatchResult &Result) {
   const auto *MatchedDecl =
       Result.Nodes.getNodeAs<DeclRefExpr>("randomGenerator");
-  diag(MatchedDecl->getLocation(), "rand() function has limited randomness");
+  diag(MatchedDecl->getLocation(), "rand() function has limited randomness, use C++11 random library instead");
 }
 
 } // namespace cert

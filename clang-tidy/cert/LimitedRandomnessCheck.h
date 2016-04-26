@@ -16,10 +16,10 @@ namespace clang {
 namespace tidy {
 namespace cert {
 
-/// FIXME: Write a short description.
+/// Pseudorandom number generators are not genuinely random. This checker warns for the usage of std::rand() function
 ///
 /// For the user-facing documentation see:
-/// http://clang.llvm.org/extra/clang-tidy/checks/cert-limited-randomness.html
+/// http://clang.llvm.org/extra/clang-tidy/checks/cert-msc50-cpp.html
 class LimitedRandomnessCheck : public ClangTidyCheck {
 public:
   LimitedRandomnessCheck(StringRef Name, ClangTidyContext *Context)

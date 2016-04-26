@@ -34,7 +34,7 @@ public:
     // C++ checkers
     // DCL
     CheckFactories.registerCheck<LimitedRandomnessCheck>(
-        "cert-limited-randomness");
+        "cert-msc50-cpp");
     CheckFactories.registerCheck<VariadicFunctionDefCheck>(
         "cert-dcl50-cpp");
     CheckFactories.registerCheck<misc::NewDeleteOverloadsCheck>(
