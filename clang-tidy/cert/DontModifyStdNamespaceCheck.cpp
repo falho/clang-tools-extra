@@ -28,7 +28,7 @@ void DontModifyStdNamespaceCheck::check(
     const MatchFinder::MatchResult &Result) {
   const auto *MatchedDecl = Result.Nodes.getNodeAs<NamespaceDecl>("std");
   diag(MatchedDecl->getLocation(),
-       "Modification of std namespace can give unexpected result");
+       "Modification of std namespace can result to undefined behavior");
 }
 
 } // namespace cert
