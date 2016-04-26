@@ -15,7 +15,7 @@ namespace A {
 }
 
 namespace std {
-// CHECK-MESSAGES: :[[@LINE-1]]:1: warning: Modification of std namespace can result to undefined behavior [cert-msc53-cpp]  
+// CHECK-MESSAGES: :[[@LINE-1]]:11: warning: Modification of std namespace can result to undefined behavior [cert-msc53-cpp]  
   int stdInt;
 }
 
