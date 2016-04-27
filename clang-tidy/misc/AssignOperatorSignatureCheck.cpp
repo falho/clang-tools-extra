@@ -80,7 +80,9 @@ void AssignOperatorSignatureCheck::check(
   static const char *const Messages[][2] = {
       {"ReturnType", "operator=() should return '%0&'"},
       {"ArgumentType", "operator=() should take '%0 const&', '%0&&' or '%0'"},
-      {"cv", "operator=() should not be marked '%1'"}};
+      {"cv", "operator=() should not be marked '%1'"},
+      {"NoReturn", "operator=() should return *this"}
+  };
 
   for (const auto &Message : Messages) {
     if (Result.Nodes.getNodeAs<Decl>(Message[0]))
@@ -91,7 +93,7 @@ void AssignOperatorSignatureCheck::check(
   const auto* Retstmt = Result.Nodes.getNodeAs<ReturnStmt>("ReturnThis");
   if (Retstmt) {
     const auto Location = Retstmt->getRetValue()->getLocStart();
-    diag(Location, "operator= should return *this");
+    diag(Location, Messages[3][1]);
   }
 }
 
