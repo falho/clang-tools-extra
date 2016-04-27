@@ -18,9 +18,11 @@ namespace tidy {
 namespace cert {
 
 void LimitedRandomnessCheck::registerMatchers(MatchFinder *Finder) {
-  Finder->addMatcher(declRefExpr(hasDeclaration(namedDecl(hasName("::rand"))))
-                         .bind("randomGenerator"),
-                     this);
+  Finder->addMatcher(
+      declRefExpr(hasDeclaration(functionDecl(namedDecl(hasName("::rand")),
+                                              parameterCountIs(0))))
+          .bind("randomGenerator"),
+      this);
 }
 
 void LimitedRandomnessCheck::check(const MatchFinder::MatchResult &Result) {
@@ -33,4 +35,3 @@ void LimitedRandomnessCheck::check(const MatchFinder::MatchResult &Result) {
 } // namespace cert
 } // namespace tidy
 } // namespace clang
-

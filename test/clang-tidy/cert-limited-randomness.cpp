@@ -1,21 +1,15 @@
 // RUN: %check_clang_tidy %s cert-msc50-cpp %t
 
 int rand();
+int rand(int);
 
 namespace std {
 using ::rand;
-typedef char * string;
-char * to_string(int);
 }
-
-//#include <cstdlib>
 
 namespace nonstd {
   int rand();
 }
-
-// problem: matcher is also matching for this
-//int rand(int);
 
 void testFunction1() {
   int i = std::rand();
@@ -24,7 +18,7 @@ void testFunction1() {
   int j = ::rand();
   // CHECK-MESSAGES: :[[@LINE-1]]:13: warning: rand() function has limited randomness, use C++11 random library instead [cert-msc50-cpp]
 
-  //int k = rand(i);
+  int k = rand(i);
 
   int l = nonstd::rand();
 

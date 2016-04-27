@@ -17,7 +17,7 @@ namespace tidy {
 namespace cert {
 
 /// Pseudorandom number generators are not genuinely random. This checker warns
-/// for the usage of std::rand() function
+/// for the usage of std::rand() function.
 ///
 /// For the user-facing documentation see:
 /// http://clang.llvm.org/extra/clang-tidy/checks/cert-msc50-cpp.html
