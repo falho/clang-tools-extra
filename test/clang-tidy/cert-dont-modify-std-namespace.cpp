@@ -1,7 +1,5 @@
 // RUN: %check_clang_tidy %s cert-msc53-cpp %t
 
-//#include <iostream>
-
 namespace A {
   namespace B {
     int b;
@@ -11,6 +9,11 @@ namespace A {
 namespace A {
   namespace B {
     int c;
+  }
+}
+
+namespace posix {
+  namespace std {
   }
 }
 

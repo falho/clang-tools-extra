@@ -22,13 +22,25 @@ void DontModifyStdNamespaceCheck::registerMatchers(MatchFinder *Finder) {
       namespaceDecl(allOf(unless(isExpansionInSystemHeader()), hasName("std")))
           .bind("std"),
       this);
+
+  Finder->addMatcher(namespaceDecl(allOf(unless(isExpansionInSystemHeader()),
+                                         hasName("posix")))
+                         .bind("posix"),
+                     this);
 }
 
 void DontModifyStdNamespaceCheck::check(
     const MatchFinder::MatchResult &Result) {
-  const auto *MatchedDecl = Result.Nodes.getNodeAs<NamespaceDecl>("std");
-  diag(MatchedDecl->getLocation(),
-       "Modification of std namespace can result to undefined behavior");
+  const auto *Std = Result.Nodes.getNodeAs<NamespaceDecl>("std");
+  const auto *Posix = Result.Nodes.getNodeAs<NamespaceDecl>("posix");
+
+  if (Std != nullptr)
+    diag(Std->getLocation(),
+         "Modification of std namespace can result to undefined behavior");
+
+  if (Posix != nullptr)
+    diag(Posix->getLocation(),
+         "Modification of posix namespace can result to undefined behavior");
 }
 
 } // namespace cert

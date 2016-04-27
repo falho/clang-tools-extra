@@ -16,8 +16,8 @@ namespace clang {
 namespace tidy {
 namespace cert {
 
-/// Modification of the std namespace can result to undefined behavior. This
-/// checker warns for such modifications.
+/// Modification of the std or posix namespace can result to undefined behavior.
+/// This checker warns for such modifications.
 ///
 /// For the user-facing documentation see:
 /// http://clang.llvm.org/extra/clang-tidy/checks/cert-msc53-cpp.html
@@ -34,4 +34,3 @@ public:
 } // namespace clang
 
 #endif // LLVM_CLANG_TOOLS_EXTRA_CLANG_TIDY_CERT_DONT_MODIFY_STD_NAMESPACE_H
-

@@ -3,4 +3,4 @@
 cert-msc53-cpp
 ==============================
 
-Modification of the std namespace can result to undefined behavior. This checker warns for such modifications.
+Modification of the std or posix namespace can result to undefined behavior. This checker warns for such modifications.
