@@ -19,28 +19,19 @@ namespace cert {
 
 void DontModifyStdNamespaceCheck::registerMatchers(MatchFinder *Finder) {
   Finder->addMatcher(
-      namespaceDecl(allOf(unless(isExpansionInSystemHeader()), hasName("std")))
-          .bind("std"),
+      namespaceDecl(unless(isExpansionInSystemHeader()), anyOf(hasName("std"), hasName("posix")))
+          .bind("nmspc"),
       this);
-
-  Finder->addMatcher(namespaceDecl(allOf(unless(isExpansionInSystemHeader()),
-                                         hasName("posix")))
-                         .bind("posix"),
-                     this);
 }
 
 void DontModifyStdNamespaceCheck::check(
     const MatchFinder::MatchResult &Result) {
-  const auto *Std = Result.Nodes.getNodeAs<NamespaceDecl>("std");
-  const auto *Posix = Result.Nodes.getNodeAs<NamespaceDecl>("posix");
-
-  if (Std != nullptr)
-    diag(Std->getLocation(),
-         "Modification of std namespace can result to undefined behavior");
-
-  if (Posix != nullptr)
-    diag(Posix->getLocation(),
-         "Modification of posix namespace can result to undefined behavior");
+  const auto *Nmspc = Result.Nodes.getNodeAs<NamespaceDecl>("nmspc");
+ 
+  std::string namespaceName = Nmspc->getName();
+ 
+  diag(Nmspc->getLocation(),
+       "Modification of " + namespaceName +" namespace can result to undefined behavior");
 }
 
 } // namespace cert
