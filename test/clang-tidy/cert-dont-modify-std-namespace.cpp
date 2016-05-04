@@ -1,4 +1,4 @@
-// RUN: %check_clang_tidy %s cert-msc53-cpp %t
+// RUN: %check_clang_tidy %s cert-msc53-cpp %t -- -std=c++1z
 
 namespace A {
   namespace B {
@@ -13,13 +13,21 @@ namespace A {
 }
 
 namespace posix {
-  namespace std {
+  namespace vmi {
   }
 }
 
 namespace std {
 // CHECK-MESSAGES: :[[@LINE-1]]:11: warning: Modification of std namespace can result to undefined behavior [cert-msc53-cpp]  
   int stdInt;
+}
+
+namespace foobar {
+  namespace std {
+  }
+}
+
+namespace posix::a {
 }
 
 using namespace std;
