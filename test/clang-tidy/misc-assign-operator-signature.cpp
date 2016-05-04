@@ -18,6 +18,8 @@ struct BadReturn {
   // CHECK-MESSAGES: :[[@LINE-1]]:3: warning: operator=() should return 'BadReturn&' [misc-assign-operator-signature]
   const BadReturn& operator=(BadReturn&&);
   // CHECK-MESSAGES: :[[@LINE-1]]:3: warning: operator=() should return 'Bad
+  void operator=(int);
+  // CHECK-MESSAGES: :[[@LINE-1]]:3: warning: operator=() should return 'Bad
 };
 struct BadReturn2 {
   BadReturn2&& operator=(const BadReturn2&);
@@ -59,7 +61,7 @@ struct NoReturn {
     int member;
 
     NoReturn &operator=(const NoReturn &rhs) {
-        // CHECK-MESSAGES: :[[@LINE-1]]:5: warning: operator= should return *this
+        // CHECK-MESSAGES: :[[@LINE-1]]:5: warning: operator=() should return *this
         this->member = rhs.member;
     }
 };
@@ -67,7 +69,7 @@ struct NoReturn {
 struct ReturnOtherThanThis {
     ReturnOtherThanThis& operator=(const ReturnOtherThanThis& rhs) {
         return const_cast<ReturnOtherThanThis&>(rhs);
-        // CHECK-MESSAGES: :[[@LINE-1]]:16: warning: operator= should return *this
+        // CHECK-MESSAGES: :[[@LINE-1]]:16: warning: operator=() should return *this
     }
 };
 
