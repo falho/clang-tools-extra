@@ -19,6 +19,7 @@
 #include "CommandProcessorCheck.h"
 #include "DontModifyStdNamespaceCheck.h"
 #include "FloatLoopCounter.h"
+#include "LimitedRandomnessCheck.h"
 #include "SetLongJmpCheck.h"
 #include "StaticObjectExceptionCheck.h"
 #include "ThrownExceptionTypeCheck.h"
@@ -35,6 +36,8 @@ public:
     // DCL
     CheckFactories.registerCheck<DontModifyStdNamespaceCheck>(
         "cert-msc53-cpp");
+    CheckFactories.registerCheck<LimitedRandomnessCheck>(
+        "cert-msc50-cpp");
     CheckFactories.registerCheck<VariadicFunctionDefCheck>(
         "cert-dcl50-cpp");
     CheckFactories.registerCheck<misc::NewDeleteOverloadsCheck>(
