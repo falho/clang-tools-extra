@@ -15,6 +15,7 @@
 #include "AssignOperatorSignatureCheck.h"
 #include "BoolPointerImplicitConversionCheck.h"
 #include "ComparisonMisuseCheck.h"
+#include "ComparisonFunctionAddressCheck.h"
 #include "DanglingHandleCheck.h"
 #include "DefinitionsInHeadersCheck.h"
 #include "FoldInitTypeCheck.h"
@@ -68,6 +69,10 @@ public:
         "misc-bool-pointer-implicit-conversion");
     CheckFactories.registerCheck<ComparisonMisuseCheck>(
         "misc-comparison-misuse");
+    CheckFactories.registerCheck<DanglingHandleCheck>(
+        "misc-dangling-handle");
+    CheckFactories.registerCheck<ComparisonFunctionAddressCheck>(
+        "misc-comparison-function-address");
     CheckFactories.registerCheck<DanglingHandleCheck>(
         "misc-dangling-handle");
     CheckFactories.registerCheck<DefinitionsInHeadersCheck>(

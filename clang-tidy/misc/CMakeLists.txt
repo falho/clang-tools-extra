@@ -6,6 +6,7 @@ add_clang_library(clangTidyMiscModule
   AssignOperatorSignatureCheck.cpp
   BoolPointerImplicitConversionCheck.cpp
   ComparisonMisuseCheck.cpp
+  ComparisonFunctionAddressCheck.cpp
   DanglingHandleCheck.cpp
   DefinitionsInHeadersCheck.cpp
   FoldInitTypeCheck.cpp
