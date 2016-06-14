@@ -26,16 +26,6 @@ void ComparisonMisuseCheck::registerMatchers(MatchFinder *Finder) {
       this);
 
   Finder->addMatcher(
-      stmt(binaryOperator(
-               hasEitherOperand(ignoringImpCasts(callExpr(callee(
-                   functionDecl(anyOf(hasName("strcmp"), hasName("strncmp"),
-                                      hasName("memcmp"))))))),
-               hasRHS(unless(integerLiteral(equals(0)))),
-               hasLHS(unless(integerLiteral(equals(0))))))
-          .bind("funcToLiteral"),
-      this);
-
-  Finder->addMatcher(
       binaryOperator(
           unless(anyOf(hasOperatorName("=="), hasOperatorName("!="))),
           hasEitherOperand(ignoringImpCasts(gnuNullExpr())))
@@ -49,12 +39,6 @@ void ComparisonMisuseCheck::check(const MatchFinder::MatchResult &Result) {
   if (CharToLiteral)
     diag(CharToLiteral->getOperatorLoc(),
          "char* is compared to a string literal");
-
-  const auto *FunctionToLiteral =
-      Result.Nodes.getNodeAs<BinaryOperator>("funcToLiteral");
-  if (FunctionToLiteral)
-    diag(FunctionToLiteral->getOperatorLoc(),
-         "function should be compared only to 0");
 
   const auto *CompareToNull =
       Result.Nodes.getNodeAs<BinaryOperator>("compareToNull");
