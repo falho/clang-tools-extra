@@ -1,4 +1,4 @@
-// RUN: %check_clang_tidy %s cert-msc53-cpp %t -- -std=c++1z
+// RUN: %check_clang_tidy %s cert-msc53-cpp %t -- -- -std=c++1z
 
 namespace A {
   namespace B {
@@ -13,6 +13,7 @@ namespace A {
 }
 
 namespace posix {
+// CHECK-MESSAGES: :[[@LINE-1]]:11: warning: Modification of posix namespace can result to undefined behavior [cert-msc53-cpp]
   namespace vmi {
   }
 }
@@ -24,10 +25,12 @@ namespace std {
 
 namespace foobar {
   namespace std {
+// CHECK-MESSAGES: :[[@LINE-1]]:13: warning: Modification of std namespace can result to undefined behavior [cert-msc53-cpp]  
   }
 }
 
 namespace posix::a {
+// CHECK-MESSAGES: :[[@LINE-1]]:11: warning: Modification of posix namespace can result to undefined behavior [cert-msc53-cpp]
 }
 
 using namespace std;
