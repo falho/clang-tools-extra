@@ -19,6 +19,7 @@
 #include "CommandProcessorCheck.h"
 #include "FloatLoopCounter.h"
 #include "LimitedRandomnessCheck.h"
+#include "OnlytestingCheck.h"
 #include "SetLongJmpCheck.h"
 #include "StaticObjectExceptionCheck.h"
 #include "ThrownExceptionTypeCheck.h"
@@ -35,6 +36,8 @@ public:
     // DCL
     CheckFactories.registerCheck<LimitedRandomnessCheck>(
         "cert-msc50-cpp");
+    CheckFactories.registerCheck<OnlytestingCheck>(
+        "cert-OnlyTesting");
     CheckFactories.registerCheck<VariadicFunctionDefCheck>(
         "cert-dcl50-cpp");
     CheckFactories.registerCheck<misc::NewDeleteOverloadsCheck>(

@@ -5,6 +5,7 @@ add_clang_library(clangTidyCERTModule
   CommandProcessorCheck.cpp
   FloatLoopCounter.cpp
   LimitedRandomnessCheck.cpp
+  OnlytestingCheck.cpp
   SetLongJmpCheck.cpp
   StaticObjectExceptionCheck.cpp
   ThrownExceptionTypeCheck.cpp
